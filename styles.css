@@ -175,7 +175,7 @@
   /* Every photo shares this tone treatment so the warm studio shots and the
      grainy black-and-white shots read as one consistent palette. */
   .tone-photo{
-    filter:grayscale(5%) contrast(1.00) brightness(0.5) sepia(4%);
+    filter:grayscale(5%) contrast(1.00) brightness(1.05) sepia(4%);
   }
   .gal-grid{
     display:grid;
