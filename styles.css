@@ -21,6 +21,50 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
   }
+
+  /* ===== MOTION: scroll reveal ===== */
+  .reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity 0.85s cubic-bezier(.22,.61,.36,1), transform 0.85s cubic-bezier(.22,.61,.36,1);
+  }
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+
+  /* ===== MOTION: headline entrance (runs once on load, above the fold) ===== */
+  @keyframes riseIn{
+    from{opacity:0; transform:translateY(16px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes kenburns{
+    from{transform:scale(1);}
+    to{transform:scale(1.09);}
+  }
+  .headline-eyebrow{opacity:0; animation:riseIn 0.9s ease 0.1s forwards;}
+  .headline-names{opacity:0; animation:riseIn 1s ease 0.28s forwards;}
+  .headline-sub{opacity:0; animation:riseIn 0.9s ease 0.46s forwards;}
+  .headline-date{opacity:0; animation:riseIn 0.9s ease 0.62s forwards;}
+  .headline-media img{animation:kenburns 20s ease-out forwards;}
+  @media (prefers-reduced-motion: reduce){
+    .headline-eyebrow, .headline-names, .headline-sub, .headline-date{opacity:1; animation:none;}
+    .headline-media img{animation:none;}
+  }
+
+  /* ===== MOTION: gentle breathing ampersand ===== */
+  @keyframes breathe{
+    0%, 100%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+  }
+  .couple-amp{display:inline-block; animation:breathe 3.6s ease-in-out infinite;}
+
+  /* ===== MOTION: countdown digit tick ===== */
+  @keyframes digitTick{
+    0%{transform:translateY(-6px); opacity:0.4;}
+    100%{transform:translateY(0); opacity:1;}
+  }
+  .cd-num.tick{animation:digitTick 0.35s ease-out;}
+  .cd-box{transition:transform 0.3s ease, border-color 0.3s ease;}
+  .cd-box:hover{transform:translateY(-3px); border-color:rgba(255,253,248,0.5);}
+
   .display{font-family:'Cormorant Garamond', serif;}
   a{color:inherit;}
   img{display:block; max-width:100%;}
@@ -144,7 +188,16 @@
     max-width:640px;
     margin:0 auto;
   }
-  .gal-grid img{width:100%; height:100%; object-fit:cover; display:block;}
+  .gal-grid img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform 0.6s cubic-bezier(.22,.61,.36,1), filter 0.6s ease;
+    position:relative; z-index:0;
+  }
+  .gal-grid img:hover{
+    transform:scale(1.045);
+    filter:grayscale(15%) contrast(1.04) brightness(1.02) sepia(4%);
+    z-index:2;
+  }
   .gal-a{grid-area:a; aspect-ratio:3/4;}
   .gal-b{grid-area:b; aspect-ratio:4/3;}
   .gal-c{grid-area:c; aspect-ratio:4/3;}
@@ -175,7 +228,8 @@
     font-size:14px; letter-spacing:0.14em; text-transform:uppercase;
     text-decoration:none; color:var(--ink); transition:background 0.25s, color 0.25s;
   }
-  .map-btn:hover{background:var(--ink); color:var(--white);}
+  .map-btn:hover{background:var(--ink); color:var(--white); transform:translateY(-2px); box-shadow:0 8px 18px rgba(32,30,27,0.16);}
+  .map-btn:active{transform:translateY(0); box-shadow:none;}
   .thanks-line{margin-top:30px; font-style:italic; color:var(--gold);}
 
   /* ===== GIFT ===== */
@@ -191,7 +245,9 @@
     display:inline-flex; align-items:center; gap:18px;
     background:var(--white); border:1px solid var(--rule);
     padding:20px 26px; text-align:left;
+    transition:transform 0.35s cubic-bezier(.22,.61,.36,1), box-shadow 0.35s ease;
   }
+  .bank-card:hover{transform:translateY(-3px); box-shadow:0 14px 30px rgba(32,30,27,0.1);}
   .bank-card .bank-name{font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px;}
   .bank-card .bank-num{font-family:'Cormorant Garamond', serif; font-size:1.6rem; font-weight:500; letter-spacing:0.03em;}
   .bank-card .bank-holder{font-size:14px; color:var(--ink-soft); margin-top:2px;}
@@ -201,7 +257,8 @@
     text-transform:uppercase; padding:9px 16px; cursor:pointer;
     transition:background 0.25s, color 0.25s; white-space:nowrap;
   }
-  .copy-btn:hover{background:var(--ink); color:var(--white);}
+  .copy-btn:hover{background:var(--ink); color:var(--white); transform:translateY(-1px);}
+  .copy-btn:active{transform:translateY(0);}
   .copy-btn:focus-visible, .map-btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
   .copy-note{font-size:13px; color:var(--gold); margin-top:12px; height:16px;}
   @media (max-width:480px){

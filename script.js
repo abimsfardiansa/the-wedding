@@ -1,6 +1,16 @@
 // Countdown to 11 Oct 2026, 16:00 WIB (UTC+7)
 (function(){
   const target = new Date('2026-10-11T16:00:00+07:00').getTime();
+  function setDigit(id, value){
+    const el = document.getElementById(id);
+    const next = String(value).padStart(2,'0');
+    if(el.textContent !== next){
+      el.textContent = next;
+      el.classList.remove('tick'); // restart animation if still running
+      void el.offsetWidth; // force reflow so the animation replays
+      el.classList.add('tick');
+    }
+  }
   function tick(){
     const now = Date.now();
     let diff = target - now;
@@ -9,13 +19,45 @@
     const hours = Math.floor((diff % 86400000) / 3600000);
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cdDays').textContent = String(days).padStart(2,'0');
-    document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
-    document.getElementById('cdMinutes').textContent = String(minutes).padStart(2,'0');
-    document.getElementById('cdSeconds').textContent = String(seconds).padStart(2,'0');
+    setDigit('cdDays', days);
+    setDigit('cdHours', hours);
+    setDigit('cdMinutes', minutes);
+    setDigit('cdSeconds', seconds);
   }
   tick();
   setInterval(tick, 1000);
+})();
+
+// Scroll-reveal: fade + rise elements into view as the user scrolls down.
+// Purely additive — adds classes at runtime, never touches the markup or its text.
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const selectors = [
+    '.countdown .kicker', '.cd-box',
+    '.greeting .salam', '.greeting p', '.couple-grid',
+    '.gallery-head h2', '.gal-grid img',
+    '.location h2', '.location p', '.location .event-date', '.location .addr', '.location .map-btn',
+    '.gift .kicker', '.gift p', '.gift .bank-card',
+    '.thankyou .kicker', '.thankyou h2', '.thankyou p', '.thankyou .closing', '.thankyou .sign'
+  ];
+  const els = Array.from(document.querySelectorAll(selectors.join(',')));
+  if(prefersReduced || !('IntersectionObserver' in window)){
+    els.forEach(el => el.classList.add('reveal', 'is-visible'));
+    return;
+  }
+  els.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = (i % 5) * 70 + 'ms';
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => io.observe(el));
 })();
 
 
