@@ -1,3 +1,63 @@
+// Cover / opening screen: unlocks scroll and starts the headline entrance
+// animation only once the person taps "Buka Undangan".
+(function(){
+  const html = document.documentElement;
+  const body = document.body;
+  const cover = document.getElementById('coverScreen');
+  const openBtn = document.getElementById('openInvitation');
+  if(!cover || !openBtn) return;
+
+  html.classList.add('cover-locked');
+
+  openBtn.addEventListener('click', function(){
+    cover.classList.add('is-open');
+    html.classList.remove('cover-locked');
+    body.classList.add('invitation-open');
+  });
+})();
+
+// Scroll progress indicator: thin bar at the top that fills as the page scrolls.
+(function(){
+  const bar = document.getElementById('progressBar');
+  if(!bar) return;
+  let ticking = false;
+  function update(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive:true });
+  update();
+})();
+
+// Subtle parallax on the headline photo (moves the photo wrapper — the
+// zoom animation lives on the <img> itself so the two don't fight over
+// the transform property).
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const inner = document.querySelector('.headline-media-inner');
+  if(!inner || prefersReduced) return;
+  let ticking = false;
+  function update(){
+    const offset = Math.min(window.scrollY * 0.18, 60);
+    inner.style.transform = 'translateY(-' + offset + 'px)';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive:true });
+})();
+
 // Countdown to 11 Oct 2026, 16:00 WIB (UTC+7)
 (function(){
   const target = new Date('2026-10-11T16:00:00+07:00').getTime();

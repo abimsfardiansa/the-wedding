@@ -22,6 +22,45 @@
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
   }
 
+  /* ===== SCROLL PROGRESS INDICATOR ===== */
+  .progress-bar{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index:300; transition:width 0.1s linear;
+  }
+
+  /* ===== COVER / OPENING SCREEN ===== */
+  html.cover-locked, html.cover-locked body{overflow:hidden; height:100%;}
+  .cover{
+    position:fixed; inset:0; z-index:200;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--cream);
+    text-align:center;
+    transition:opacity 0.9s ease, visibility 0.9s ease;
+  }
+  .cover.is-open{opacity:0; visibility:hidden; pointer-events:none;}
+  .cover-inner{padding:0 28px;}
+  .cover-eyebrow{
+    display:block; font-style:italic; font-size:15px;
+    letter-spacing:0.1em; color:var(--gold); margin-bottom:18px;
+  }
+  .cover-names{
+    font-weight:400; font-size:clamp(2.4rem, 8vw, 3.6rem); line-height:1.08;
+    margin-bottom:14px;
+  }
+  .cover-date{
+    font-size:14px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:44px;
+  }
+  .cover-btn{
+    border:1px solid var(--ink); background:none; color:var(--ink);
+    font-family:'EB Garamond', serif; font-size:14px; letter-spacing:0.16em;
+    text-transform:uppercase; padding:15px 40px; cursor:pointer;
+    transition:background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  }
+  .cover-btn:hover{background:var(--ink); color:var(--white); transform:translateY(-2px);}
+  .cover-btn:active{transform:translateY(0);}
+
   /* ===== MOTION: scroll reveal ===== */
   .reveal{
     opacity:0;
@@ -39,14 +78,24 @@
     from{transform:scale(1);}
     to{transform:scale(1.09);}
   }
-  .headline-eyebrow{opacity:0; animation:riseIn 0.9s ease 0.1s forwards;}
-  .headline-names{opacity:0; animation:riseIn 1s ease 0.28s forwards;}
-  .headline-sub{opacity:0; animation:riseIn 0.9s ease 0.46s forwards;}
-  .headline-date{opacity:0; animation:riseIn 0.9s ease 0.62s forwards;}
-  .headline-media img{animation:kenburns 20s ease-out forwards;}
+  .headline-eyebrow{opacity:0;}
+  .headline-names{opacity:0;}
+  .headline-sub{opacity:0;}
+  .headline-date{opacity:0;}
+  body.invitation-open .headline-eyebrow{animation:riseIn 0.9s ease 0.1s forwards;}
+  body.invitation-open .headline-names{animation:riseIn 1s ease 0.28s forwards;}
+  body.invitation-open .headline-sub{animation:riseIn 0.9s ease 0.46s forwards;}
+  body.invitation-open .headline-date{animation:riseIn 0.9s ease 0.62s forwards;}
+  .headline-media{position:relative; overflow:hidden; min-height:46vh;}
+  .headline-media-inner{position:absolute; inset:0; width:100%; height:118%; will-change:transform;}
+  .headline-media-inner img{
+    width:100%; height:100%; object-fit:cover; object-position:50% 22%;
+    will-change:transform;
+  }
+  body.invitation-open .headline-media-inner img{animation:kenburns 20s ease-out forwards;}
   @media (prefers-reduced-motion: reduce){
     .headline-eyebrow, .headline-names, .headline-sub, .headline-date{opacity:1; animation:none;}
-    .headline-media img{animation:none;}
+    .headline-media-inner img{animation:none;}
   }
 
   /* ===== MOTION: gentle breathing ampersand ===== */
@@ -81,10 +130,6 @@
     grid-template-columns:1fr 1fr;
     min-height:100svh;
     align-items:stretch;
-  }
-  .headline-media{position:relative; overflow:hidden; min-height:46vh;}
-  .headline-media img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 22%;
   }
   .headline-text{
     display:flex; flex-direction:column; justify-content:center;
@@ -175,7 +220,7 @@
   /* Every photo shares this tone treatment so the warm studio shots and the
      grainy black-and-white shots read as one consistent palette. */
   .tone-photo{
-    filter:grayscale(0%) contrast(1.00) brightness(1.05) sepia(4%);
+    filter:grayscale(35%) contrast(1.04) brightness(1.02) sepia(4%);
   }
   .gal-grid{
     display:grid;
@@ -195,7 +240,7 @@
   }
   .gal-grid img:hover{
     transform:scale(1.045);
-    filter:grayscale(2%) contrast(1.00) brightness(1.05) sepia(4%);
+    filter:grayscale(15%) contrast(1.04) brightness(1.02) sepia(4%);
     z-index:2;
   }
   .gal-a{grid-area:a; aspect-ratio:3/4;}
