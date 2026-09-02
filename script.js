@@ -9,10 +9,30 @@
 
   html.classList.add('cover-locked');
 
-  openBtn.addEventListener('click', function(){
+  function openInvitation(){
     cover.classList.add('is-open');
     html.classList.remove('cover-locked');
     body.classList.add('invitation-open');
+  }
+
+  function showCover(){
+    cover.classList.remove('is-open');
+    html.classList.add('cover-locked');
+    body.classList.remove('invitation-open');
+    window.scrollTo(0, 0);
+  }
+
+  openBtn.addEventListener('click', function(){
+    openInvitation();
+    // Add a real history entry so the browser's back button has
+    // somewhere to go — otherwise the first "back" press exits the tab.
+    history.pushState({ invitationOpen: true }, '', '#undangan');
+  });
+
+  window.addEventListener('popstate', function(e){
+    if(!e.state || !e.state.invitationOpen){
+      showCover();
+    }
   });
 })();
 
