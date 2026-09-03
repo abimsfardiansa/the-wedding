@@ -1,3 +1,14 @@
+// Basic deterrent against casual photo saving: block right-click and
+// drag on every photo. (Note: this only stops casual attempts — anyone
+// using browser DevTools can still find the image, this just removes
+// the easy one-click path.)
+(function(){
+  document.querySelectorAll('.tone-photo').forEach(function(img){
+    img.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    img.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  });
+})();
+
 // Cover / opening screen: unlocks scroll and starts the headline entrance
 // animation only once the person taps "Buka Undangan".
 (function(){

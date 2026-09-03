@@ -221,6 +221,9 @@
      grainy black-and-white shots read as one consistent palette. */
   .tone-photo{
     filter:grayscale(35%) contrast(1.04) brightness(1.02) sepia(4%);
+    -webkit-touch-callout:none; /* stops the iOS long-press "Save Image" menu */
+    -webkit-user-select:none;
+    user-select:none;
   }
   .gal-grid{
     display:grid;
