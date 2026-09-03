@@ -52,6 +52,11 @@
     font-size:14px; letter-spacing:0.2em; text-transform:uppercase;
     color:var(--ink-soft); margin-bottom:44px;
   }
+  .cover-guest{
+    font-style:italic; font-size:1.15rem; color:var(--gold);
+    margin:-24px 0 36px;
+  }
+  .cover-guest[hidden]{display:none;}
   .cover-btn{
     border:1px solid var(--ink); background:none; color:var(--ink);
     font-family:'EB Garamond', serif; font-size:14px; letter-spacing:0.16em;

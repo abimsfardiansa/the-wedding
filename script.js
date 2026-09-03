@@ -1,3 +1,24 @@
+// Personalized guest name: reads ?to=Nama from the URL (e.g.
+// PERSONAL GUEST NAME
+// Example: https://situskamu.vercel.app/?to=Budi
+// The guest name is shown only on the cover screen as:
+// "Kepada : Budi"
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const guest = params.get('to');
+  const el = document.getElementById('coverGuest');
+
+  if(!el || !guest) return;
+
+  // Normalize accidental extra spaces while keeping the guest's
+  // original capitalization and using textContent for safe rendering.
+  const guestName = guest.trim().replace(/\s+/g, ' ');
+  if(!guestName) return;
+
+  el.textContent = 'Kepada : ' + guestName;
+  el.hidden = false;
+})();
+
 // Basic deterrent against casual photo saving: block right-click and
 // drag on every photo. (Note: this only stops casual attempts — anyone
 // using browser DevTools can still find the image, this just removes
