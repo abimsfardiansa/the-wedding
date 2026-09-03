@@ -41,7 +41,7 @@
   .cover.is-open{opacity:0; visibility:hidden; pointer-events:none;}
   .cover-inner{padding:0 28px;}
   .cover-eyebrow{
-    display:block; font-style:italic; font-size:15px;
+    display:block; font-style:italic; font-size:20px;
     letter-spacing:0.1em; color:var(--gold); margin-bottom:18px;
   }
   .cover-names{
