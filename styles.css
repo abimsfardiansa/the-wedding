@@ -42,7 +42,7 @@
   .cover-inner{padding:0 28px;}
   .cover-eyebrow{
     display:block; font-style:italic; font-size:20px;
-    letter-spacing:0.1em; color:var(--gold); margin-bottom:18px;
+    letter-spacing:0.1em; color:var(--gold); margin-bottom:10px;
   }
   .cover-names{
     font-weight:400; font-size:clamp(2.4rem, 8vw, 3.6rem); line-height:1.08;
