@@ -248,7 +248,7 @@
   }
   .gal-grid img:hover{
     transform:scale(1.045);
-    filter:grayscale(10%) contrast(1.04) brightness(1.02) sepia(4%);
+    filter:grayscale(25%) contrast(1.04) brightness(1.02) sepia(4%);
     z-index:2;
   }
   .gal-a{grid-area:a; aspect-ratio:3/4;}
