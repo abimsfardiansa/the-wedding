@@ -1,32 +1,14 @@
-// Personalized guest name: reads ?to=Nama from the URL (e.g.
-// https://situskamu.vercel.app/?to=Budi) and shows "Kepada : Budi" on
-// the cover screen. If the link has no ?to= param, this block does
-// nothing and the cover just shows the default text.
-(function(){
-  const params = new URLSearchParams(window.location.search);
-  const guest = params.get('to');
-  const el = document.getElementById('coverGuest');
-  if(!el || !guest || !guest.trim()) return;
-  el.textContent = 'Undangan Kepada : ' + guest.trim();
-  el.hidden = false;
-})();
-
 window.dataLayer = window.dataLayer || [];
 
-// Personalized guest name from the ?to= URL parameter (e.g. ?to=Budi).
-// Also fed into dataLayer so GTM/GA4 can attach it to every event below.
+// Personalized guest name: from ?to=Nama in the URL if the link has one.
+// If not, the cover screen below asks the visitor to type their name.
 var guestName = '';
 (function(){
   var params = new URLSearchParams(window.location.search);
   var raw = params.get('to');
-  if(!raw) return;
-  guestName = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
-  if(!guestName) return;
-  var guestEl = document.getElementById('coverGuest');
-  if(guestEl){
-    guestEl.textContent = 'Undangan Kepada : ' + guestName;
+  if(raw){
+    guestName = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
   }
-  window.dataLayer.push({ guest_name: guestName });
 })();
 
 // Basic deterrent against casual photo saving: block right-click and
@@ -41,15 +23,33 @@ var guestName = '';
 })();
 
 // Cover / opening screen: unlocks scroll and starts the headline entrance
-// animation only once the person taps "Buka Undangan".
+// animation only once the person taps "Buka Undangan". If the link had no
+// ?to=Nama, a small form asks for the name first (used for guest_name too).
 (function(){
   const html = document.documentElement;
   const body = document.body;
   const cover = document.getElementById('coverScreen');
   const openBtn = document.getElementById('openInvitation');
+  const guestEl = document.getElementById('coverGuest');
+  const nameForm = document.getElementById('coverNameForm');
+  const nameInput = document.getElementById('guestNameInput');
+  const nameError = document.getElementById('coverNameError');
   if(!cover || !openBtn) return;
 
   html.classList.add('cover-locked');
+
+  if(guestName){
+    if(guestEl) guestEl.textContent = 'Kepada Yth. Bapak/Ibu/Saudara/i ' + guestName;
+    window.dataLayer.push({ guest_name: guestName });
+  } else if(nameForm){
+    nameForm.hidden = false;
+  }
+
+  if(nameInput){
+    nameInput.addEventListener('keydown', function(e){
+      if(e.key === 'Enter') openBtn.click();
+    });
+  }
 
   function openInvitation(){
     cover.classList.add('is-open');
@@ -66,6 +66,17 @@ var guestName = '';
   }
 
   openBtn.addEventListener('click', function(){
+    if(nameForm && !nameForm.hidden){
+      const typed = nameInput.value.trim();
+      if(!typed){
+        if(nameError) nameError.textContent = 'Isi nama dulu, ya.';
+        nameInput.focus();
+        return;
+      }
+      guestName = typed;
+      if(guestEl) guestEl.textContent = 'Kepada Yth. Bapak/Ibu/Saudara/i ' + guestName;
+      window.dataLayer.push({ guest_name: guestName });
+    }
     openInvitation();
     // Add a real history entry so the browser's back button has
     // somewhere to go — otherwise the first "back" press exits the tab.
