@@ -39,7 +39,7 @@ var guestName = '';
   html.classList.add('cover-locked');
 
   if(guestName){
-    if(guestEl) guestEl.textContent = 'Kepada Yth. Bapak/Ibu/Saudara/i ' + guestName;
+    if(guestEl) guestEl.textContent = 'Undangan Kepada ' + guestName;
     window.dataLayer.push({ guest_name: guestName });
   } else if(nameForm){
     nameForm.hidden = false;
@@ -74,7 +74,7 @@ var guestName = '';
         return;
       }
       guestName = typed;
-      if(guestEl) guestEl.textContent = 'Kepada Yth. Bapak/Ibu/Saudara/i ' + guestName;
+      if(guestEl) guestEl.textContent = 'Undangan Kepada ' + guestName;
       window.dataLayer.push({ guest_name: guestName });
     }
     openInvitation();
