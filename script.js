@@ -1,22 +1,32 @@
 // Personalized guest name: reads ?to=Nama from the URL (e.g.
-// PERSONAL GUEST NAME
-// Example: https://situskamu.vercel.app/?to=Budi
-// The guest name is shown only on the cover screen as:
-// "Kepada : Budi"
+// https://situskamu.vercel.app/?to=Budi) and shows "Kepada : Budi" on
+// the cover screen. If the link has no ?to= param, this block does
+// nothing and the cover just shows the default text.
 (function(){
   const params = new URLSearchParams(window.location.search);
   const guest = params.get('to');
   const el = document.getElementById('coverGuest');
-
-  if(!el || !guest) return;
-
-  // Normalize accidental extra spaces while keeping the guest's
-  // original capitalization and using textContent for safe rendering.
-  const guestName = guest.trim().replace(/\s+/g, ' ');
-  if(!guestName) return;
-
-  el.textContent = 'Undangan Kepada : ' + guestName;
+  if(!el || !guest || !guest.trim()) return;
+  el.textContent = 'Undangan Kepada : ' + guest.trim();
   el.hidden = false;
+})();
+
+window.dataLayer = window.dataLayer || [];
+
+// Personalized guest name from the ?to= URL parameter (e.g. ?to=Budi).
+// Also fed into dataLayer so GTM/GA4 can attach it to every event below.
+var guestName = '';
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var raw = params.get('to');
+  if(!raw) return;
+  guestName = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
+  if(!guestName) return;
+  var guestEl = document.getElementById('coverGuest');
+  if(guestEl){
+    guestEl.textContent = 'Kepada Yth. Bapak/Ibu/Saudara/i ' + guestName;
+  }
+  window.dataLayer.push({ guest_name: guestName });
 })();
 
 // Basic deterrent against casual photo saving: block right-click and
@@ -45,6 +55,7 @@
     cover.classList.add('is-open');
     html.classList.remove('cover-locked');
     body.classList.add('invitation-open');
+    window.dataLayer.push({ event: 'buka_undangan', guest_name: guestName || '(tidak diketahui)' });
   }
 
   function showCover(){
@@ -180,5 +191,15 @@ function copyNum(){
     const note = document.getElementById('copyNote');
     note.textContent = 'Nomor rekening disalin';
     setTimeout(function(){ note.textContent=''; }, 2200);
+    window.dataLayer.push({ event: 'copy_rekening', guest_name: guestName || '(tidak diketahui)' });
   });
 }
+
+// Track clicks on "Buka Google Maps"
+(function(){
+  const mapBtn = document.querySelector('.map-btn');
+  if(!mapBtn) return;
+  mapBtn.addEventListener('click', function(){
+    window.dataLayer.push({ event: 'klik_maps', guest_name: guestName || '(tidak diketahui)' });
+  });
+})();

@@ -62,22 +62,3 @@ Taruh file baru di folder `images/`, lalu update path-nya di `index.html` (cari 
 ## Nomor rekening
 
 Ada di `index.html`, cari `id="bankNum"`.
-
-
-## Nama Tamu Personal
-
-Link undangan bisa diberi parameter `to` untuk menampilkan nama tamu secara personal di cover.
-
-Contoh:
-
-```text
-https://situskamu.vercel.app/?to=Budi
-```
-
-Cover akan menampilkan:
-
-```text
-Kepada : Budi
-```
-
-Nama tamu dibaca langsung dari URL menggunakan JavaScript. Jika parameter `to` tidak ada, cover tetap tampil seperti biasa tanpa nama tamu.

@@ -41,8 +41,8 @@
   .cover.is-open{opacity:0; visibility:hidden; pointer-events:none;}
   .cover-inner{padding:0 28px;}
   .cover-eyebrow{
-    display:block; font-style:italic; font-size:20px;
-    letter-spacing:0.1em; color:var(--gold); margin-bottom:10px;
+    display:block; font-style:italic; font-size:15px;
+    letter-spacing:0.1em; color:var(--gold); margin-bottom:18px;
   }
   .cover-names{
     font-weight:400; font-size:clamp(2.4rem, 8vw, 3.6rem); line-height:1.08;
@@ -52,6 +52,11 @@
     font-size:14px; letter-spacing:0.2em; text-transform:uppercase;
     color:var(--ink-soft); margin-bottom:44px;
   }
+  .cover-guest{
+    font-style:italic; font-size:1.05rem; color:var(--ink-soft);
+    margin:-24px 0 30px;
+  }
+  .cover-guest:empty{display:none; margin:0;}
   .cover-guest{
     font-style:italic; font-size:1.15rem; color:var(--gold);
     margin:-24px 0 36px;
@@ -248,7 +253,7 @@
   }
   .gal-grid img:hover{
     transform:scale(1.045);
-    filter:grayscale(25%) contrast(1.04) brightness(1.02) sepia(4%);
+    filter:grayscale(15%) contrast(1.04) brightness(1.02) sepia(4%);
     z-index:2;
   }
   .gal-a{grid-area:a; aspect-ratio:3/4;}
