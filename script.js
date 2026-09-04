@@ -24,7 +24,7 @@ var guestName = '';
   if(!guestName) return;
   var guestEl = document.getElementById('coverGuest');
   if(guestEl){
-    guestEl.textContent = 'Kepada Yth. Bapak/Ibu/Saudara/i ' + guestName;
+    guestEl.textContent = 'Undangan Kepada : ' + guestName;
   }
   window.dataLayer.push({ guest_name: guestName });
 })();
