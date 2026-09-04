@@ -15,7 +15,7 @@
   const guestName = guest.trim().replace(/\s+/g, ' ');
   if(!guestName) return;
 
-  el.textContent = 'Kepada : ' + guestName;
+  el.textContent = 'Undangan Kepada : ' + guestName;
   el.hidden = false;
 })();
 
