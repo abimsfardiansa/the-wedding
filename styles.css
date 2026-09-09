@@ -22,14 +22,12 @@
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
   }
 
-  /* ===== SCROLL PROGRESS INDICATOR ===== */
   .progress-bar{
     position:fixed; top:0; left:0; height:3px; width:0%;
     background:linear-gradient(90deg, var(--gold), var(--gold-light));
     z-index:300; transition:width 0.1s linear;
   }
 
-  /* ===== COVER / OPENING SCREEN ===== */
   html.cover-locked, html.cover-locked body{overflow:hidden; height:100%;}
   .cover{
     position:fixed; inset:0; z-index:200;
@@ -92,7 +90,6 @@
   .cover-btn:hover{background:var(--ink); color:var(--white); transform:translateY(-2px);}
   .cover-btn:active{transform:translateY(0);}
 
-  /* ===== MOTION: scroll reveal ===== */
   .reveal{
     opacity:0;
     transform:translateY(26px);
@@ -100,7 +97,6 @@
   }
   .reveal.is-visible{opacity:1; transform:translateY(0);}
 
-  /* ===== MOTION: headline entrance (runs once on load, above the fold) ===== */
   @keyframes riseIn{
     from{opacity:0; transform:translateY(16px);}
     to{opacity:1; transform:translateY(0);}
@@ -129,14 +125,12 @@
     .headline-media-inner img{animation:none;}
   }
 
-  /* ===== MOTION: gentle breathing ampersand ===== */
   @keyframes breathe{
     0%, 100%{transform:scale(1);}
     50%{transform:scale(1.1);}
   }
   .couple-amp{display:inline-block; animation:breathe 3.6s ease-in-out infinite;}
 
-  /* ===== MOTION: countdown digit tick ===== */
   @keyframes digitTick{
     0%{transform:translateY(-6px); opacity:0.4;}
     100%{transform:translateY(0); opacity:1;}
@@ -155,7 +149,6 @@
     color:var(--gold); margin-bottom:16px; display:block;
   }
 
-  /* ===== HEADLINE (split photo + text) ===== */
   .headline{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -213,7 +206,6 @@
     color:rgba(255,253,248,0.65); margin-top:8px;
   }
 
-  /* ===== GREETING ===== */
   .greeting{text-align:center;}
   .greeting .salam{
     font-family:'Cormorant Garamond', serif; font-style:italic;
@@ -241,18 +233,16 @@
     .couple-amp{transform:rotate(90deg); display:inline-block;}
   }
 
-  /* ===== GALLERY (editorial mosaic, no carousel) ===== */
   .gallery{background:var(--cream-deep); text-align:center;}
   .gallery-head{margin-bottom:36px;}
   .gallery-head h2{
     font-family:'Cormorant Garamond', serif; font-weight:400;
     font-size:clamp(1.6rem,4vw,2.1rem); margin-top:12px;
   }
-  /* Every photo shares this tone treatment so the warm studio shots and the
-     grainy black-and-white shots read as one consistent palette. */
+
   .tone-photo{
     filter:grayscale(20%) contrast(1.04) brightness(1.02) sepia(4%);
-    -webkit-touch-callout:none; /* stops the iOS long-press "Save Image" menu */
+    -webkit-touch-callout:none; 
     -webkit-user-select:none;
     user-select:none;
   }
@@ -287,7 +277,6 @@
     .gal-a{aspect-ratio:4/5;}
   }
 
-  /* ===== LOCATION ===== */
   .location{text-align:center;}
   .location h2{
     font-family:'Cormorant Garamond', serif; font-weight:400;
@@ -311,7 +300,6 @@
   .map-btn:active{transform:translateY(0); box-shadow:none;}
   .thanks-line{margin-top:30px; font-style:italic; color:var(--gold);}
 
-  /* ===== GIFT ===== */
   .gift{background:var(--cream-deep); text-align:center;}
   .gift h2{
     font-family:'Cormorant Garamond', serif; font-weight:400;
@@ -345,7 +333,6 @@
     .copy-btn{width:100%;}
   }
 
-  /* ===== THANK YOU ===== */
   .thankyou{text-align:center; padding-bottom:100px;}
   .thankyou .kicker{margin-bottom:0;}
   .thankyou h2{

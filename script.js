@@ -1,7 +1,5 @@
 window.dataLayer = window.dataLayer || [];
 
-// Personalized guest name: from ?to=Nama in the URL if the link has one.
-// If not, the cover screen below asks the visitor to type their name.
 var guestName = '';
 (function(){
   var params = new URLSearchParams(window.location.search);
@@ -10,11 +8,6 @@ var guestName = '';
     guestName = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
   }
 })();
-
-// Basic deterrent against casual photo saving: block right-click and
-// drag on every photo. (Note: this only stops casual attempts — anyone
-// using browser DevTools can still find the image, this just removes
-// the easy one-click path.)
 (function(){
   document.querySelectorAll('.tone-photo').forEach(function(img){
     img.addEventListener('contextmenu', function(e){ e.preventDefault(); });
@@ -22,9 +15,6 @@ var guestName = '';
   });
 })();
 
-// Cover / opening screen: unlocks scroll and starts the headline entrance
-// animation only once the person taps "Buka Undangan". If the link had no
-// ?to=Nama, a small form asks for the name first (used for guest_name too).
 (function(){
   const html = document.documentElement;
   const body = document.body;
@@ -78,8 +68,6 @@ var guestName = '';
       window.dataLayer.push({ guest_name: guestName });
     }
     openInvitation();
-    // Add a real history entry so the browser's back button has
-    // somewhere to go — otherwise the first "back" press exits the tab.
     history.pushState({ invitationOpen: true }, '', '#undangan');
   });
 
@@ -90,7 +78,6 @@ var guestName = '';
   });
 })();
 
-// Scroll progress indicator: thin bar at the top that fills as the page scrolls.
 (function(){
   const bar = document.getElementById('progressBar');
   if(!bar) return;
@@ -111,9 +98,6 @@ var guestName = '';
   update();
 })();
 
-// Subtle parallax on the headline photo (moves the photo wrapper — the
-// zoom animation lives on the <img> itself so the two don't fight over
-// the transform property).
 (function(){
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const inner = document.querySelector('.headline-media-inner');
@@ -132,7 +116,6 @@ var guestName = '';
   }, { passive:true });
 })();
 
-// Countdown to 11 Oct 2026, 16:00 WIB (UTC+7)
 (function(){
   const target = new Date('2026-10-11T16:00:00+07:00').getTime();
   function setDigit(id, value){
@@ -140,8 +123,8 @@ var guestName = '';
     const next = String(value).padStart(2,'0');
     if(el.textContent !== next){
       el.textContent = next;
-      el.classList.remove('tick'); // restart animation if still running
-      void el.offsetWidth; // force reflow so the animation replays
+      el.classList.remove('tick'); 
+      void el.offsetWidth; 
       el.classList.add('tick');
     }
   }
@@ -162,8 +145,6 @@ var guestName = '';
   setInterval(tick, 1000);
 })();
 
-// Scroll-reveal: fade + rise elements into view as the user scrolls down.
-// Purely additive — adds classes at runtime, never touches the markup or its text.
 (function(){
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const selectors = [
@@ -206,7 +187,6 @@ function copyNum(){
   });
 }
 
-// Track clicks on "Buka Google Maps"
 (function(){
   const mapBtn = document.querySelector('.map-btn');
   if(!mapBtn) return;
